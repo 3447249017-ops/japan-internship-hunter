@@ -1,0 +1,21 @@
+
+[
+  {
+    "provider": "lever",
+    "board": "mujininc",
+    "company": "Mujin",
+    "enabled": true
+  },
+  {
+    "provider": "greenhouse",
+    "board": "guidepoint",
+    "company": "Guidepoint",
+    "enabled": true
+  },
+  {
+    "provider": "greenhouse",
+    "board": "brunswickgroup",
+    "company": "Brunswick Group",
+    "enabled": true
+  }
+]
