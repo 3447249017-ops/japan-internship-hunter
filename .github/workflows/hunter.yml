@@ -1,10 +1,10 @@
-
-name: Internship Hunter
+name: Internship Hunter V2
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 * * 5"
+    # 09:00 JST Friday = 00:00 UTC Friday (JST has no DST)
+    - cron: '0 0 * * 5'
 
 permissions:
   contents: read
@@ -12,23 +12,24 @@ permissions:
 jobs:
   hunt:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     steps:
-      - name: Download repository
+      - name: Checkout
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
-
-      - name: Run internship hunter
-        run: python hunter.py
-
-      - name: Upload results
+          python-version: '3.12'
+      - name: Run Hunter V2
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4.1-mini
+        run: python hunter.py --days 30
+      - name: Upload CSV and summary
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: internship-leads
+          name: internship-hunter-v2-results
           path: output/
           if-no-files-found: warn
+          retention-days: 30
